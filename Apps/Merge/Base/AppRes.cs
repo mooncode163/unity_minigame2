@@ -17,15 +17,11 @@ public class AppRes
     //audio 
     public const string AUDIO_BG = "AppCommon/Audio/Bg";
     public const string AUDIO_BTN_CLICK = "AppCommon/Audio/BtnClick";
-    public const string AUDIO_WORD_OK = "AppCommon/Audio/word_ok";
-    public const string AUDIO_WORD_FAIL = "AppCommon/Audio/word-failed";
-    public const string AUDIO_LETTER_DRAG_1 = "AppCommon/Audio/letter-drag-1";
-    public const string AUDIO_LETTER_DRAG_2 = "AppCommon/Audio/letter-drag-2";
-    public const string AUDIO_LETTER_DRAG_3 = "AppCommon/Audio/letter-drag-3";
-    public const string AUDIO_LETTER_DRAG_4 = "AppCommon/Audio/letter-drag-4";
-    public const string AUDIO_SELECT = "AppCommon/Audio/select";
-    public const string AUDIO_SUCCESS_1 = "AppCommon/Audio/success-1";
-    public const string AUDIO_SUCCESS_2 = "AppCommon/Audio/success-2";
+    public const string AUDIO_Merge = "App/Audio/Merge";
+    public const string AUDIO_Win = "App/Audio/Win";
+    public const string AUDIO_Fail = "App/Audio/Fail";
+    public const string AUDIO_Down = "App/Audio/Down";
+   //
     public const string Audio_PopupOpen = "AppCommon/Audio/PopUp/PopupOpen";
     public const string Audio_PopupClose = "AppCommon/Audio/PopUp/PopupClose";
 

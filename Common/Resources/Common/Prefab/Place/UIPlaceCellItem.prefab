@@ -184,6 +184,7 @@ MonoBehaviour:
   keyText: 
   keyColor: 
   keyImage: 
+  keyImageH: 
   objContent: {fileID: 1419215894527626}
   width: 0
   height: 0
@@ -253,6 +254,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -318,6 +320,7 @@ MonoBehaviour:
   keyText: 
   keyColor: 
   keyImage: 
+  keyImageH: 
   image: {fileID: 7620077786165814204}
   keyImage2: 
 --- !u!1 &2775278665802591936
@@ -373,6 +376,7 @@ MonoBehaviour:
   keyText: 
   keyColor: 
   keyImage: 
+  keyImageH: 
   image: {fileID: 7858972494442946179}
   keyImage2: 
 --- !u!114 &2757937030654876090
@@ -393,8 +397,11 @@ MonoBehaviour:
   enableHide: 1
   enableOffsetAdBanner: 0
   enableOffsetScreen: 0
+  isOnlyForLandscape: 0
+  isOnlyForPortrait: 0
   space: {x: 0, y: 0}
   align: 4
+  target: {fileID: 0}
   _scaleType: 0
   ratio: 0.8
   _offsetMin: {x: 0, y: 0}
@@ -451,6 +458,7 @@ MonoBehaviour:
   keyText: 
   keyColor: PlaceItemTitle
   keyImage: 
+  keyImageH: 
   title: {fileID: 8119067111131531235}
   isFitFontWidth: 0
   offsetW: 0
@@ -515,10 +523,11 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 18876e68573669e41b9388f9ce210a66, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -588,6 +597,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

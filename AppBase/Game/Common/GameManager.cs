@@ -60,7 +60,20 @@ public class GameManager
         }
 
     }
+    public bool isHaveUnlockLevel
+    {
+        get
+        {
+            string key = "key_HaveUnlockLevel";
+            return Common.Int2Bool(PlayerPrefs.GetInt(key, 0));
+        }
+        set
+        {
+            string key = "key_HaveUnlockLevel";
+            PlayerPrefs.SetInt(key, Common.Bool2Int(value));
 
+        }
+    }
 
     public void GotoGame(UIViewController fromController)
     {
@@ -102,10 +115,10 @@ public class GameManager
 
     }
 
- 
+
     public void ShowPrivacy()
     {
-         if ( GameManager.main.isLoadGameScreenShot)
+        if (GameManager.main.isLoadGameScreenShot)
         {
             return;
         }
@@ -115,6 +128,10 @@ public class GameManager
         // }
         if (Common.GetBool(UIPrivacy.KEY_DISABLE_UIPRIVACY))
         {
+            // if(Application.isEditor)
+            // {
+
+            // }
             return;
         }
         string strPrefab = ConfigPrefab.main.GetPrefab("UIPrivacy");

@@ -28,9 +28,9 @@ public class HomeViewController : UIViewController
 
     void Init()
     {
-        string strPrefab = "AppCommon/Prefab/Home/" + GetPrefabName();
+        // string strPrefab = "AppCommon/Prefab/Home/" + GetPrefabName();
         string strPrefabDefault = "Common/Prefab/Home/UIHomeDefault";
-        GameObject obj = PrefabCache.main.Load(strPrefab);
+        GameObject obj = PrefabCache.main.LoadByKey(GetPrefabName());
         if (obj == null)
         {
             obj = PrefabCache.main.Load(strPrefabDefault);
@@ -78,7 +78,22 @@ public class HomeViewController : UIViewController
         {
             AppVersionHuawei app = AppVersionHuawei.main;
             app.StartParseVersion();
+
+
+            // TestIPInfo();
         }
+    }
+
+    public async void TestIPInfo()
+    {
+        int ret = 0;
+        await IPInfo.main.GetIpInfoAsync();
+        if (IPInfo.main.IsHuaweiAppStoreCheck())
+        {
+            ret = 1;
+        }
+
+        Debug.Log("IPInfo adinsertNoadDay =" + ret);
     }
 
     public override void ViewDidUnLoad()
@@ -106,8 +121,11 @@ public class HomeViewController : UIViewController
         uiHome.SetController(this);
         UIViewController.ClonePrefabRectTransform(uiHomePrefab.gameObject, uiHome.gameObject);
         uiHome.Init();
- 
-        GameManager.main.ShowPrivacy();
+
+        if (runCount == 0)
+        {
+            GameManager.main.ShowPrivacy();
+        }
     }
 
 

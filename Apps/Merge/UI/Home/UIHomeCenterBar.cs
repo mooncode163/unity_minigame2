@@ -44,7 +44,7 @@ public class UIHomeCenterBar : UIView
         }
 
 
-
+// btnAddLove.gameObject.SetActive(AppVersion.appCheckHasFinished);
 
 
     }
@@ -63,40 +63,7 @@ public class UIHomeCenterBar : UIView
 
         Vector2 sizeCanvas = this.frame.size;
         float x = 0, y = 0, w = 0, h = 0;
-
-        LayOutGrid lygrid = this.GetComponent<LayOutGrid>();
-        if (Device.isLandscape)
-        {
-            lygrid.row = 1;
-            lygrid.col = lygrid.GetChildCount(false);
-
-
-        }
-        else
-        {
-            int count = lygrid.GetChildCount(false);
-            lygrid.col = 2;
-            lygrid.row = count / lygrid.col;
-            if (count % lygrid.col > 0)
-            {
-                lygrid.row++;
-            }
-
-        }
-        // if (!AppVersion.appCheckHasFinished)
-        // {
-        //     lygrid.row = 2;
-
-        //     lygrid.col = 2;
-        // }
-
-
-        lygrid.LayOut();
-
-        RectTransform rctran = this.GetComponent<RectTransform>();
-        w = rctran.rect.width;
-        h = lygrid.row * 256;
-        rctran.sizeDelta = new Vector2(w, h);
+ 
 
     }
 
@@ -111,7 +78,7 @@ public class UIHomeCenterBar : UIView
         if (this.controller != null)
         {
             NaviViewController navi = this.controller.naviController;
-            // navi.Push(LoginViewController.main);
+            navi.Push(GameViewController.main);
         }
     }
 

@@ -7,7 +7,7 @@ public class ScreenShotConfig
     public ShotDeviceInfo deviceInfo;
     public int GetTotalPage()
     {
-        return 5;
+        return 4;
     }
     public ShotItemInfo GetPage(ShotDeviceInfo dev, int idx)
     {
@@ -36,21 +36,25 @@ public class ScreenShotConfig
             {
                 case 0:
                     controller = HomeViewController.main;
-                    break;
-                case 1:
-                    controller = GuankaViewController.main;
-                    break;
-                case 2:
-                    LevelManager.main.gameLevel = 0; controller = GameViewController.main;
-                    break;
-                case 3:
-                    LevelManager.main.gameLevel = 1; controller = GameViewController.main;
-                    break;
-                case 4:
-                    LevelManager.main.gameLevel = 2;
+                    break; 
+                    case 1:
+                    LevelManager.main.gameLevel = 0;
 
+                    UIGameMerge.autoClickCount = 20;
                     controller = GameViewController.main;
                     break;
+                case 2:
+                    LevelManager.main.gameLevel = 0; 
+                     UIGameMerge.autoClickCount = 50;
+                    controller = GameViewController.main;
+                    break;
+                case 3:
+                    LevelManager.main.gameLevel = 2; 
+                     UIGameMerge.autoClickCount = 100;
+                    //  gamewin 
+                    controller = GameViewController.main;
+                    break;
+           
                 default:
                     controller = HomeViewController.main;
                     break;

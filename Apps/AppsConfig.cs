@@ -28,7 +28,7 @@ public class AppsConfig
             return ret;
         }
     }
-    public const string NAME = "minigame";
+    public const string NAME = "minigame2";
     public const string DIR_PRODUCT_PC_MAC = "/Users/moon/sourcecode/unity/product";
     public const string DIR_PRODUCT_PC_WIN = "F:/sourcecode/unity/product";
 }

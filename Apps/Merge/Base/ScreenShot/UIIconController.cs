@@ -8,16 +8,23 @@ using UnityEngine.UI;
 
 public class UIIconController : UIShotBase
 {
-    public Image imageBg;
-    public Image imageHD;
-    public Image imageBoard;
+    public UIImage imageBg;
+    public UIImage imageHD;
+    public UIImage imageBoard;
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
     void Awake()
     {
         imageHD.gameObject.SetActive(false);
-        imageBoard.gameObject.SetActive(false);
+
+        // string pic_name = Common.GAME_DATA_DIR + "/screenshot/icon";
+        // string pic = pic_name + ".jpg";
+        // if (!FileUtil.FileIsExistAsset(pic))
+        // {
+        //     pic = pic_name + ".png";
+        // }
+        // imageBg.UpdateImage(pic);
     }
     void Start()
     {

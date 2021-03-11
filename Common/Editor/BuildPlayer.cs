@@ -60,15 +60,21 @@ public class BuildPlayer
     }
 
 
-   [MenuItem(KEY_MENU_ROOT + "/Screenshot")]
+    [MenuItem(KEY_MENU_ROOT + "/Screenshot")]
     static void ScreenshotBuild()
     {
-        Debug.Log("ScreenshotBuild start"); 
+        Debug.Log("ScreenshotBuild start");
 
         BulidTarget("QQ", "Screenshot");
         Debug.Log("ScreenshotBuild end");
     }
 
+    [MenuItem(KEY_MENU_ROOT + "/Export Android & iOS")]
+    static void PerformAndroidAndiOSBuild()
+    {
+        PerformAndroidBuild();
+        PerformiPhoneBuild();
+    }
     static void ConverIcon()
     {
 
@@ -83,6 +89,9 @@ public class BuildPlayer
     static void BulidTarget(string name, string target)
     {
         ConverIcon();
+
+        // ToolEditor.MakeConfigPrefabAndImage();
+
         string app_name = name;
         string target_dir = Application.dataPath + "/OutPut";
         string target_name = name + ".apk";
@@ -115,20 +124,24 @@ public class BuildPlayer
         if (target == "Screenshot")
         {
             //target_dir = applicationPath + "/OutPut/iOS";
-            target_dir = Resource.dirProduct+"/bin";
+            target_dir = Resource.dirProduct + "/bin";
             // target_name = app_name;
             target_name = PlayerSettings.productName;
             targetGroup = BuildTargetGroup.Standalone;
             buildTarget = BuildTarget.StandaloneOSX;
-             if (Application.platform == RuntimePlatform.WindowsEditor)
+            if (Application.platform == RuntimePlatform.WindowsEditor)
             {
                 buildTarget = BuildTarget.StandaloneWindows;
             }
 
 
         }
-        
+
         dirRootProject = target_dir + "/" + target_name;
+
+        // EditorXcode(target_dir + "/" + target_name);
+        // return;
+
         //每次build删除之前的残留
         if (Directory.Exists(dirRootProject))
         {
@@ -175,7 +188,16 @@ public class BuildPlayer
         FileUtil.CopyDir(src, dst);
         Debug.Log("BuildiOSPlayer copy gameres end ");
     }
-
+    static void EditorXcode(string target_dir)
+    {
+        // #if UNITY_IOS
+        Debug.Log("BuildiOSPlayer start ");
+        BuildiOSPlayer.EditProj(target_dir);
+        Debug.Log("BuildiOSPlayer end ");
+        // #endif
+        // copy gameres
+        CopyGameRes();
+    }
 
     //https://docs.unity3d.com/ScriptReference/BuildPipeline.BuildPlayer.html
 
@@ -194,7 +216,7 @@ public class BuildPlayer
         EditorUserBuildSettings.SwitchActiveBuildTarget(targetGroup, build_target);
         // string res =
         BuildReport report = BuildPipeline.BuildPlayer(scenes, target_dir, build_target, build_options);
-
+        // BuildSummary summary;
         BuildSummary summary = report.summary;
         if (summary.result == BuildResult.Succeeded)
         {

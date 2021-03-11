@@ -87,7 +87,11 @@ public class UIView : MonoBehaviour
     public string keyColor;
 
     public string keyImage;
+    public string keyImage2;
+
     public string keyImageH;//only for landscap 横屏
+    public string keyImageH2;
+
     static public Rect GetFrame(RectTransform rctran)
     {
         Rect rc = Rect.zero;

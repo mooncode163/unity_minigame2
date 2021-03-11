@@ -17,18 +17,7 @@ public class UIHomeMerge : UIHomeBase//, ISysImageLibDelegate
         TextName.text = appname;
 
  
-        LayOutSize ly = imageBgName.GetComponent<LayOutSize>();
-        if (Device.isLandscape)
-        {
-            ly.ratioW = 0.6f;
-            ly.ratioH = 0.8f;
-        }
-        else
-        {
-            ly.ratioW = 0.8f;
-            ly.ratioH = 0.6f;
-        }
-
+    
 
     }
 

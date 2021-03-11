@@ -4,11 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 public class UIAdHomeController : UIShotBase
 {
-    public Image imageBg;
-    public GameObject objGameBox;
-    public GameObject objMath;
-    public Image imageTitle;
-    public Text textTitle;
+    public UIImage imageBg; 
+    public UIText textTitle;
 
 
     /// <summary>
@@ -18,7 +15,8 @@ public class UIAdHomeController : UIShotBase
     {
         string appname = Common.GetAppNameDisplay();
         textTitle.text = appname; 
-
+        string pic = Common.GAME_DATA_DIR + "/screenshot/adhome.png";
+        imageBg.UpdateImage(pic); 
     }
     /// <summary>
     /// Start is called on the frame when a script is enabled just before
@@ -33,40 +31,6 @@ public class UIAdHomeController : UIShotBase
     {
         base.LayOut();
         float x, y, w, h;
-
-        Vector2 sizeCanvas = this.frame.size;
-        {
-            RectTransform rctran = imageBg.GetComponent<RectTransform>();
-            float w_image = rctran.rect.width;
-            float h_image = rctran.rect.height;
-            float scalex = sizeCanvas.x / w_image;
-            float scaley = sizeCanvas.y / h_image;
-            float scale = Mathf.Max(scalex, scaley);
-            imageBg.transform.localScale = new Vector3(scale, scale, 1.0f);
-
-        }
-
-        {
-            x = -this.frame.width / 4;
-            y = 0;
-            RectTransform rctran = objGameBox.GetComponent<RectTransform>();
-            rctran.anchoredPosition = new Vector2(x, y);
-        }
-
-        {
-            x = this.frame.width / 4;
-            RectTransform rctran = objMath.GetComponent<RectTransform>();
-            y = rctran.rect.height;
-            rctran.anchoredPosition = new Vector2(x, y);
-        }
-
-        {
-            x = this.frame.width / 4;
-            RectTransform rctran = imageTitle.GetComponent<RectTransform>();
-            y = -rctran.rect.height;
-            rctran.anchoredPosition = new Vector2(x, y);
-        }
-
 
     }
 }
