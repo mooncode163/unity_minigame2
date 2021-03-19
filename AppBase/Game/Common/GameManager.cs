@@ -60,6 +60,8 @@ public class GameManager
         }
 
     }
+
+    // 是否已经解锁
     public bool isHaveUnlockLevel
     {
         get

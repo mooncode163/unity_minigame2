@@ -228,7 +228,7 @@ public class Config
             {
                 if (Config.main.isNoIDFASDK)
                 {
-                    ret = false;
+                    // ret = false;
                 }
             }
             return ret;

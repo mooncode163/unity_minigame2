@@ -10,7 +10,7 @@ public class BoardLine : UIView
  
     public void Awake()
     {
-        this.gameObject.name = Generate.NameBoardLine;
+        this.gameObject.name = GameMerge.NameBoardLine;
 
     }
 

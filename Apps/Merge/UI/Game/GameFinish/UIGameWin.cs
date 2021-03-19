@@ -7,19 +7,43 @@ using UnityEngine.UI;
 
 
 public class UIGameWin : UIViewPop
-{ 
+{
     public UIImage imageBg;
-    public UIText textTitle; 
+    public UIImage imageLogo;
+    public UIImage imageItem0;
+    public UIImage imageItem1;
+    public UIImage imageItem2;
+    public UIText textTitle;
     public Button btnRestart; //从第一关开始
 
-    protected override void Awake()
+    public void Awake()
     {
-        base.Awake(); 
-    
-           LayOut();
+        base.Awake();
+        List<UIImage> listItem = new List<UIImage>();
+        listItem.Add(imageItem0);
+        listItem.Add(imageItem1);
+        listItem.Add(imageItem2);
+
+        for (int i = 0; i < listItem.Count; i++)
+        {
+            ItemInfo info = GameLevelParse.main.GetItemInfo(i);
+            string pic = GameLevelParse.main.GetImagePath(info.id);
+            UIImage ui = listItem[i];
+            ui.index = i;
+            ui.id = info.id;
+            ui.UpdateImage(pic);
+        }
+
+        {
+            ItemInfo info = GameLevelParse.main.GetLastItemInfo();
+            string pic = GameLevelParse.main.GetImagePath(info.id);
+            imageLogo.UpdateImage(pic);
+        }
+
+        LayOut();
     }
     // Use this for initialization
-    protected override void Start()
+    public void Start()
     {
         base.Start();
         LayOut();
@@ -49,9 +73,9 @@ public class UIGameWin : UIViewPop
             rctranRoot.sizeDelta = new Vector2(w, h);
 
         }
-           base.LayOut();
+        base.LayOut();
     }
- 
+
     public void OnClickBtnRestart()
     {
         Close();
@@ -62,5 +86,5 @@ public class UIGameWin : UIViewPop
         LevelManager.main.gameLevelFinish = -1;
         GameManager.main.GotoPlayAgain();
     }
-    
+
 }

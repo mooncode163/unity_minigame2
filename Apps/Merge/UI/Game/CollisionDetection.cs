@@ -26,13 +26,13 @@ public class CollisionDetection : MonoBehaviour
 
       
         //播放下落声音
-        if (other.transform.name == Generate.NameDeadLine && playFallingSound == false)
+        if (other.transform.name == GameMerge.NameDeadLine && playFallingSound == false)
         {
            // GameObject.Find("CodeControl").GetComponent<VoiceControl>().PlayTheFallingSound();//播放下落声音
             playFallingSound = true;
             AudioPlay.main.PlayFile(AppRes.AUDIO_Down);
         }
-        if((other.transform.name != Generate.NameDeadLine)&&(other.transform.name != Generate.NameBoardLine))
+        if((other.transform.name != GameMerge.NameDeadLine)&&(other.transform.name != GameMerge.NameBoardLine))
         {
             // Debug.Log("OnCollisionEnter2D enter="+_tag);
         }
@@ -46,18 +46,23 @@ public class CollisionDetection : MonoBehaviour
             Debug.Log("OnCollisionEnter2D other="+_tag);
             //判断是否超出最大水果限制
            // if (Convert.ToInt32(_tag) < Generate.imageKeyFruit.Length)
-           string keynext = Generate.main.GetNextItem(_tag); 
+           string keynext = GameMerge.main.GetNextItem(_tag); 
                if (!Common.BlankString(keynext))
             {
                      Debug.Log("OnCollisionEnter2D keynext="+keynext);
                 //在被碰撞的物体原有的位置上生成新物体
-                UIMergeItem uiNext = Generate.main.CreateItem(keynext);
+                UIMergeItem uiNext = GameMerge.main.CreateItem(keynext);
 
-                float value = 3f;
-                // 生成物体 使用随机防止同地点击无限堆高
-                 uiNext.transform.position = v2.position + new Vector3(UnityEngine.Random.Range(-value, value) * 0.2f, UnityEngine.Random.Range(-value, value) * 0.1f, 0);//!
+                // float value = 3f;
+                // float ratio = 0.2f;
+                //  if (Generate.main.isAutoClick)
+                // {
+                //     ratio = 1f;
+                // }
+                // // 生成物体 使用随机防止同地点击无限堆高
+                //  uiNext.transform.position = v2.position + new Vector3(UnityEngine.Random.Range(-value, value) *ratio, UnityEngine.Random.Range(-value, value) * ratio, 0);//!
                 
-                // uiNext.transform.position = v2.position;
+                uiNext.transform.position = v2.position;
                 uiNext.EnableGravity(true); 
                 // newFruit.GetComponent<Rigidbody2D>().simulated = true;//让水果获得重力
 
@@ -69,17 +74,19 @@ public class CollisionDetection : MonoBehaviour
                 //增加分数
                // GameObject.Find("CodeControl").GetComponent<ScoreControl>().ScoreIncrease(10 * Convert.ToInt32(_tag));
 
-                GameData.main.score+=10*Generate.main.GetIndexOfItem(keynext);
+                GameData.main.score+=10*GameMerge.main.GetIndexOfItem(keynext);
                 UIGameMerge.main.UpdateScore();
 
-
+            GameMerge.main.RemoveItemFromList(this.gameObject);
+            GameMerge.main.RemoveItemFromList(other.gameObject);
             Destroy(this.gameObject);
             Destroy(other.gameObject);
+
 
                 // GameObject.Find("CodeControl").GetComponent<SizeChange>().ShrinkingObjects(this.gameObject);//清除自身
                 // GameObject.Find("CodeControl").GetComponent<SizeChange>().ShrinkingObjects(other.gameObject);//清除被碰撞物体
 
-                if(keynext==Generate.main.GetLastItem())
+                if(keynext==GameMerge.main.GetLastItem())
                 {
                     //game win 合成了大西瓜
                      UIGameMerge.main.OnGameFinish(true);

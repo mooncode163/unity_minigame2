@@ -184,7 +184,9 @@ MonoBehaviour:
   keyText: 
   keyColor: 
   keyImage: 
+  keyImage2: 
   keyImageH: 
+  keyImageH2: 
   objContent: {fileID: 1419215894527626}
   width: 0
   height: 0
@@ -300,8 +302,8 @@ RectTransform:
   m_Father: {fileID: 224136007504272590}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 128, y: 128}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -320,9 +322,10 @@ MonoBehaviour:
   keyText: 
   keyColor: 
   keyImage: 
-  keyImageH: 
-  image: {fileID: 7620077786165814204}
   keyImage2: 
+  keyImageH: 
+  keyImageH2: 
+  image: {fileID: 7620077786165814204}
 --- !u!1 &2775278665802591936
 GameObject:
   m_ObjectHideFlags: 0
@@ -376,9 +379,10 @@ MonoBehaviour:
   keyText: 
   keyColor: 
   keyImage: 
-  keyImageH: 
-  image: {fileID: 7858972494442946179}
   keyImage2: 
+  keyImageH: 
+  keyImageH2: 
+  image: {fileID: 7858972494442946179}
 --- !u!114 &2757937030654876090
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,6 +399,7 @@ MonoBehaviour:
   dispLayHorizontal: 0
   enableLayout: 1
   enableHide: 1
+  enableLandscape: 0
   enableOffsetAdBanner: 0
   enableOffsetScreen: 0
   isOnlyForLandscape: 0
@@ -458,7 +463,9 @@ MonoBehaviour:
   keyText: 
   keyColor: PlaceItemTitle
   keyImage: 
+  keyImage2: 
   keyImageH: 
+  keyImageH2: 
   title: {fileID: 8119067111131531235}
   isFitFontWidth: 0
   offsetW: 0

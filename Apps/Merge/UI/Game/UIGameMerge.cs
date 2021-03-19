@@ -4,6 +4,7 @@ using LitJson;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
+using System.Threading;
 
 /*
 ui 界面参考
@@ -12,9 +13,18 @@ https://play.google.com/store/apps/details?id=com.hz.Android153.FruitSliceMaster
 */
 public class UIGameMerge : UIGameBase//, IGameMergeDelegate
 {
+        public enum Status
+    {
+        Play,
+        Prop, 
+    }
     GameMerge GameMergePrefab;
     public GameMerge game;
-    public UIText titleScore;
+    public UIToolBar uiToolBar;
+        public UIText titleScore;
+
+    public Status gameStatus;
+    public UIPopProp.Type typeProp;
     int autoIndex = 0;
     float autoClickTime = 0.2f;
     static public int autoClickCount = 200;
@@ -36,7 +46,8 @@ public class UIGameMerge : UIGameBase//, IGameMergeDelegate
         base.Awake();
         LoadPrefab();
         _main = this;
-        autoIndex =0;
+        autoIndex = 0;
+        gameStatus = Status.Play;
 
 
     }
@@ -46,55 +57,66 @@ public class UIGameMerge : UIGameBase//, IGameMergeDelegate
         base.Start();
         LayOut();
         UpdateGuankaLevel(LevelManager.main.gameLevel);
-        
-        AutoClick();
 
-        if(GameManager.main.isLoadGameScreenShot)
+        AutoClick();
+        bool isShowProp = false;
+        if (GameManager.main.isLoadGameScreenShot)
         {
-            if(LevelManager.main.gameLevel>1)
+            if (LevelManager.main.gameLevel > 1)
             {
-                
-            // OnGameFinish(false);
+                    isShowProp = true;
+                //   OnGameFinish(false);
+                 Invoke("ShowProp",autoClickTime*autoClickCount/3);
             }
         }
-        OnUIDidFinish(autoClickTime*autoClickCount*1.2f);
+        if(!isShowProp)
+        {
 
-       
+            OnUIDidFinish(autoClickTime * autoClickCount * 1.2f);
+
+        }
+// OnGameFinish(true);
     }
 
-       IEnumerator MouseClickUp(float time,int idx)
+    public void ShowProp()
     {
-         yield return new WaitForSeconds(time); 
-         Generate.main.isMouseUp = true;
-         Debug.Log("autoclick MouseClickUp idx ="+idx);
-         
+uiToolBar.OnClickBtnBomb();
+OnUIDidFinish();
     }
 
-         IEnumerator MouseClickDown(float time,int idx)
+    IEnumerator MouseClickUp(float time, int idx)
     {
-         yield return new WaitForSeconds(time); 
-         Generate.main.isMouseDown = true;
-         Debug.Log("autoclick MouseClickDown idx ="+idx);
+        yield return new WaitForSeconds(time);
+        // Thread.Sleep((int)(time*1000));
+        GameMerge.main.isMouseUp = true;
+        Debug.Log("autoclick MouseClickUp idx =" + idx);
+
+    }
+
+    IEnumerator MouseClickDown(float time, int idx)
+    {
+        yield return new WaitForSeconds(time);
+        // Thread.Sleep((int)(time*1000));
+        GameMerge.main.isMouseDown = true;
+        Debug.Log("autoclick MouseClickDown idx =" + idx);
     }
 
     public void AutoClick()
     {
-        if(!GameManager.main.isLoadGameScreenShot)
+        if (!GameManager.main.isLoadGameScreenShot)
         {
-           return;
+            return;
         }
-        Generate.main.isAutoClick = true;
-        int count = autoClickCount; 
-        float time = autoClickTime;
+        GameMerge.main.isAutoClick = true;  
         //for(int i=0;i<count;i++)
-        { 
-            StartCoroutine(MouseClickDown(time,autoIndex));
-            StartCoroutine(MouseClickUp(time,autoIndex));
+        {
+            StartCoroutine(MouseClickDown(autoClickTime, autoIndex));
+            StartCoroutine(MouseClickUp(autoClickTime, autoIndex));
         }
         autoIndex++;
-        if(autoIndex<count)
+        if (autoIndex < autoClickCount)
         {
-        Invoke("AutoClick",time*2);
+            Invoke("AutoClick", autoClickTime * 2);
         }
     }
 
@@ -127,7 +149,7 @@ public class UIGameMerge : UIGameBase//, IGameMergeDelegate
 
 
     }
- 
+
 
 
     public override void UpdateGuankaLevel(int level)
@@ -135,10 +157,10 @@ public class UIGameMerge : UIGameBase//, IGameMergeDelegate
         base.UpdateGuankaLevel(level);
 
         GameMerge prefab = PrefabCache.main.LoadByKey<GameMerge>("GameMerge");
-         game = (GameMerge)GameObject.Instantiate(prefab);
-        
+        game = (GameMerge)GameObject.Instantiate(prefab);
+
         AppSceneBase.main.AddObjToMainWorld(game.gameObject);
-        UIViewController.ClonePrefabRectTransform(prefab.gameObject,game.gameObject);
+        UIViewController.ClonePrefabRectTransform(prefab.gameObject, game.gameObject);
         GameData.main.score = 0;
         UpdateScore();
     }
@@ -148,63 +170,92 @@ public class UIGameMerge : UIGameBase//, IGameMergeDelegate
 
     }
 
- 
+
 
     /// <summary>
     /// 显示分数
     /// </summary>
     public void UpdateScore()
     {
-        titleScore.text = Language.main.GetString("Score")+":"+GameData.main.score.ToString();
+        titleScore.text = Language.main.GetString("Score") + ":" + GameData.main.score.ToString();
+        LayOut();
     }
 
-public void OnGameFinish(  bool isFail)
+    public void OnGameFinish(bool isFail)
     {
+        if (GameManager.main.isLoadGameScreenShot)
+        {
+            return;
+        }
         ItemInfo infoPlace = LevelManager.main.GetPlaceItemInfo(LevelManager.main.placeLevel);
         string key = "UIGameWin";
-          string strPrefab ="";
+        string strPrefab = "";
         //show game win
         if (isFail)
         {
-             ShowAdInsert(GAME_AD_INSERT_SHOW_STEP, false);
-             AudioPlay.main.PlayFile(AppRes.AUDIO_Fail);
-              key = "UIGameFail"; 
-                    strPrefab = ConfigPrefab.main.GetPrefab(key); 
-                      PopUpManager.main.Show<UIGameFail>(strPrefab, popup =>
-          {
-              Debug.Log("UIGameFail Open ");
-             // popup.UpdateItem(info);
+            ShowAdInsert(GAME_AD_INSERT_SHOW_STEP, false);
+            AudioPlay.main.PlayFile(AppRes.AUDIO_Fail);
+            key = "UIGameFail";
+            strPrefab = ConfigPrefab.main.GetPrefab(key);
+            PopUpManager.main.Show<UIGameFail>(strPrefab, popup =>
+            {
+                Debug.Log("UIGameFail Open ");
+                // popup.UpdateItem(info);
 
-          }, popup =>
-          {
+            }, popup =>
+            {
 
 
-          });
+            });
 
         }
         else
         {
             AudioPlay.main.PlayFile(AppRes.AUDIO_Win);
             Debug.Log("  OnGameWin");
-            LevelManager.main.gameLevelFinish = LevelManager.main.gameLevel; 
+            LevelManager.main.gameLevelFinish = LevelManager.main.gameLevel;
             // OnGameWinBase();
- 
-      strPrefab = ConfigPrefab.main.GetPrefab(key);  
-             PopUpManager.main.Show<UIGameWin>(strPrefab, popup =>
-          {
-              Debug.Log("UIGameWin Open ");
+
+            strPrefab = ConfigPrefab.main.GetPrefab(key);
+            PopUpManager.main.Show<UIGameWin>(strPrefab, popup =>
+         {
+             Debug.Log("UIGameWin Open ");
              // popup.UpdateItem(info);
 
-          }, popup =>
-          {
+         }, popup =>
+         {
 
 
-          });
+         });
         }
 
-         
+
 
     }
 
+    public void OnGameProp(UIPopProp ui,UIPopProp.Type type)
+    {
+        typeProp = type;
+   
+         Debug.Log("OnGameProp typeProp="+typeProp);
+        switch (type)
+        {
+            case UIPopProp.Type.Hammer:
+                {
+               
+                }
+                break;
+            case UIPopProp.Type.Magic:
+                {
+                    GameMerge.main.ChangeItem(ui.idChangeTo);
+                }
+                break;
+            case UIPopProp.Type.Bomb:
+                {
+                  
+                }
+                break;
+        }
+    }
 
 }

@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class UIHomeMerge : UIHomeBase//, ISysImageLibDelegate
 {
+    public UIImage imageLogo;
     public UIHomeSideBar uiHomeSideBar;
 
     public UIHomeCenterBar uiHomeCenterBar;
@@ -16,9 +17,10 @@ public class UIHomeMerge : UIHomeBase//, ISysImageLibDelegate
         string appname = Common.GetAppNameDisplay();
         TextName.text = appname;
 
- 
-    
-
+        LevelManager.main.ParseGuanka();
+        ItemInfo info = GameLevelParse.main.GetLastItemInfo();
+        string pic = GameLevelParse.main.GetImagePath(info.id);
+        imageLogo.UpdateImage(pic);
     }
 
     // Use this for initialization

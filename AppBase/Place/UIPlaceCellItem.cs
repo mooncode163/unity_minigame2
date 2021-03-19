@@ -20,13 +20,21 @@ public class UIPlaceCellItem : UICellItemBase
         {
             imageIcon.gameObject.SetActive(false);
         }
-        if ((Config.main.isNoIDFASDK && Common.isiOS) && (!GameManager.main.isHaveUnlockLevel))
+        if(info.isAd)
         {
+    if (Config.main.isNoIDFASDK && Common.isiOS)
+        {
+            imageIcon.gameObject.SetActive(!GameManager.main.isHaveUnlockLevel);
+        }
+        }
+      
+        if ((Config.main.isNoIDFASDK && Common.isiOS) && (!GameManager.main.isHaveUnlockLevel))
+        { 
             imageIcon.UpdateImageByKey("icon_lock");
         }else{
             imageIcon.UpdateImageByKey("BtnIconVideo");
         }
-
+//  imageIcon.UpdateImageByKey("icon_lock");
         LayOut();
     }
     public override bool IsLock()

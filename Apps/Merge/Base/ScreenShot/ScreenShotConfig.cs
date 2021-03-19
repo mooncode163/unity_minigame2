@@ -31,30 +31,30 @@ public class ScreenShotConfig
         else
         {
 
-
+            AppSceneBase.main.OnCloseAllPopView();
             switch (idx)
             {
+
                 case 0:
-                    controller = HomeViewController.main;
-                    break; 
-                    case 1:
                     LevelManager.main.gameLevel = 0;
 
-                    UIGameMerge.autoClickCount = 20;
+                    UIGameMerge.autoClickCount = 100;
+                    controller = GameViewController.main;
+                    break;
+                case 1:
+                    LevelManager.main.gameLevel = 0;
+                    UIGameMerge.autoClickCount = 150;
                     controller = GameViewController.main;
                     break;
                 case 2:
-                    LevelManager.main.gameLevel = 0; 
-                     UIGameMerge.autoClickCount = 50;
-                    controller = GameViewController.main;
-                    break;
-                case 3:
-                    LevelManager.main.gameLevel = 2; 
-                     UIGameMerge.autoClickCount = 100;
+                    LevelManager.main.gameLevel = 2;
+                    UIGameMerge.autoClickCount = 200;
                     //  gamewin 
                     controller = GameViewController.main;
                     break;
-           
+                case 3:
+                    controller = HomeViewController.main;
+                    break;
                 default:
                     controller = HomeViewController.main;
                     break;

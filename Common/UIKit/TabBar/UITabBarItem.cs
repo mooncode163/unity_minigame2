@@ -10,7 +10,7 @@ public class UITabBarItem : UIView
     private bool isActive = false;//true代表正在执行翻转，不许被打断
     public UIImage imageBg;
     public UIText textTitle;
-    public int index;
+ 
 
     public string keyColorSel;
 

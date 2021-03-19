@@ -8,6 +8,7 @@ using System.Text;
 public class GameLevelParse : LevelParseBase
 {
     public const int ADVIDEO_LEVEL_MIN = 10;
+       public List<object> listGameItems = new List<object>();
     static private GameLevelParse _main = null;
     public static GameLevelParse main
     {
@@ -35,12 +36,15 @@ public class GameLevelParse : LevelParseBase
         ItemInfo info = listGuanka[idx] as ItemInfo;
         return info;
     }
-
-    // public WordItemInfo GetItemInfo()
-    // {
-    //     int idx = LevelManager.main.gameLevel;
-    //     return GetGuankaItemInfo(idx) as WordItemInfo;
-    // }
+ 
+     public   ItemInfo GetItemInfo(int idx)
+    {
+        return listGameItems[idx] as ItemInfo;
+    }
+       public   ItemInfo GetLastItemInfo()
+    {
+        return listGameItems[listGameItems.Count-1] as ItemInfo;
+    }
 
     public override int GetGuankaTotal()
     {
@@ -63,9 +67,37 @@ public class GameLevelParse : LevelParseBase
     public override int ParseGuanka()
     {
         int count = 0;
- 
+        ParseGameItems();
         return count;
     }
 
-  
+      public string GetImagePath(string id)
+    { 
+        return CloudRes.main.rootPathGameRes + "/Image/"+id+".png";
+    }
+    public   void ParseGameItems()
+    {
+           if ((listGameItems != null) && (listGameItems.Count != 0))
+        {
+            return  ;
+        }
+ 
+        int idx = LevelManager.main.placeLevel;
+        ItemInfo infoPlace = LevelManager.main.GetPlaceItemInfo(idx);
+        string fileName = CloudRes.main.rootPathGameRes + "/Level/GameItems.json"; 
+        string json = FileUtil.ReadStringAsset(fileName);//((TextAsset)Resources.Load(fileName, typeof(TextAsset))).text;
+ 
+        JsonData root = JsonMapper.ToObject(json);
+       
+        JsonData items = root["items"];
+        for (int i = 0; i < items.Count; i++)
+        {
+            JsonData item = items[i];
+            ItemInfo info = new ItemInfo();
+            info.id = (string)item["id"];
+            info.pic = GetImagePath(info.id);
+            listGameItems.Add(info);
+        }
+    }
+
 }

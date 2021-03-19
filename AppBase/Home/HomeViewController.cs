@@ -28,10 +28,16 @@ public class HomeViewController : UIViewController
 
     void Init()
     {
-        // string strPrefab = "AppCommon/Prefab/Home/" + GetPrefabName();
+        string strPrefab = "AppCommon/Prefab/Home/" + GetPrefabName();
         string strPrefabDefault = "Common/Prefab/Home/UIHomeDefault";
-        GameObject obj = PrefabCache.main.LoadByKey(GetPrefabName());
+        string key = GetPrefabName();
+        Debug.Log("home key ="+key);
+        GameObject obj = PrefabCache.main.LoadByKey(key);
         if (obj == null)
+        {
+            obj = PrefabCache.main.Load(strPrefab);
+        }
+         if (obj == null)
         {
             obj = PrefabCache.main.Load(strPrefabDefault);
         }
