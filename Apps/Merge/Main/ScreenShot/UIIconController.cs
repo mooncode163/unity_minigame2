@@ -18,13 +18,13 @@ public class UIIconController : UIShotBase
     {
         imageHD.gameObject.SetActive(false);
 
-        // string pic_name = Common.GAME_DATA_DIR + "/screenshot/icon";
-        // string pic = pic_name + ".jpg";
-        // if (!FileUtil.FileIsExistAsset(pic))
-        // {
-        //     pic = pic_name + ".png";
-        // }
-        // imageBg.UpdateImage(pic);
+        string pic_name = Common.GAME_DATA_DIR + "/screenshot/icon";
+        string pic = pic_name + ".jpg";
+        if (!FileUtil.FileIsExistAsset(pic))
+        {
+            pic = pic_name + ".png";
+        }
+        imageBg.UpdateImage(pic);
     }
     void Start()
     {

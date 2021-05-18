@@ -13,9 +13,9 @@ public class UIHomeAppCenter : UIView
 
     //http://www.mooncore.cn/moonma/app_center/applist_home_kids.json
     public const string APPCENTER_HTTP_URL_HOME_KIDS_GAME = "https://6c69-lianlianle-shkb3-1259451541.tcb.qcloud.la/AppCenter/applist_home_kids.json?sign=2354d163fe32793f4512ad648eafc6b9&t=1589273008";
-    public Button btnAppIcon0;
-    public Button btnAppIcon1;
-    public Button btnAppIcon2;
+    public UIButton btnAppIcon0;
+    public UIButton btnAppIcon1;
+    public UIButton btnAppIcon2;
 
     HttpRequest httpReqJson;
     List<ItemInfo> listApp;
@@ -26,22 +26,26 @@ public class UIHomeAppCenter : UIView
     /// </summary>
     public void Awake()
     {
+          base.Awake();
         //先不显示
-        if (btnAppIcon0)
-        {
-            btnAppIcon0.GetComponent<Image>().color = Color.clear;
-        }
-        if (btnAppIcon1)
-        {
-            btnAppIcon1.GetComponent<Image>().color = Color.clear;
-        }
-        if (btnAppIcon2)
-        {
-            btnAppIcon2.GetComponent<Image>().color = Color.clear;
-        }
+        // if (btnAppIcon0)
+        // {
+        //     btnAppIcon0.GetComponent<Image>().color = Color.clear;
+        // }
+        // if (btnAppIcon1)
+        // {
+        //     btnAppIcon1.GetComponent<Image>().color = Color.clear;
+        // }
+        // if (btnAppIcon2)
+        // {
+        //     btnAppIcon2.GetComponent<Image>().color = Color.clear;
+        // }
 
         this.gameObject.SetActive(false);
 
+        btnAppIcon0.SetActive(false);
+        btnAppIcon1.SetActive(false);
+        btnAppIcon2.SetActive(false);
 
         StartParserAppList();
         LayOut();
@@ -49,20 +53,17 @@ public class UIHomeAppCenter : UIView
     // Use this for initialization
     public void Start()
     {
+         base.Start();
         LayOut();
     }
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+   
 
     public override void LayOut()
     {
         base.LayOut();
         float x = 0, y = 0, w = 0, h = 0;
         //layoutappicon 
-
+/*
         Rect rectParent = this.frameParent;
         {
             GridLayoutGroup gridLayout = this.GetComponent<GridLayoutGroup>();
@@ -88,7 +89,7 @@ public class UIHomeAppCenter : UIView
             rctran.anchoredPosition = new Vector2(x, y);
         }
 
-
+*/
     }
 
     void StartParserAppList()
@@ -176,7 +177,7 @@ public class UIHomeAppCenter : UIView
         {
             //StartCoroutine(LoadIconImage(req.index, data));
             int idx = req.index;
-            Button btn = null;
+            UIButton btn = null;
             switch (idx)
             {
                 case 0:
@@ -198,11 +199,11 @@ public class UIHomeAppCenter : UIView
             }
             if (btn != null)
             {
-                btn.GetComponent<Image>().color = Color.white;
+                // btn.GetComponent<Image>().color = Color.white;
+                btn.SetActive(true);
                 Texture2D tex = new Texture2D(0, 0, TextureFormat.ARGB32, false);
                 tex.LoadImage(data);
-                btn.GetComponent<Image>().sprite = TextureUtil.CreateSpriteFromTex(RoundRectTexture(tex));
-
+                btn.imageBg.UpdateImageTexture(tex); 
             }
             LayOut();
         }

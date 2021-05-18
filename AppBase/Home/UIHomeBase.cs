@@ -14,12 +14,17 @@ public class UIHomeBase : UIView, IPopViewControllerDelegate
     public const string STR_KEYNAME_VIEWALERT_UPDATE_VERSION = "STR_KEYNAME_VIEWALERT_UPDATE_VERSION";
     public const string STR_KEYNAME_VIEWALERT_EXIT_APP = "STR_KEYNAME_VIEWALERT_EXIT_APP";
 
+
+    public UIHomeSideBar uiHomeSideBar;
+
+    public UIHomeCenterBar uiHomeCenterBar;
     public UIHomeAppCenter uiHomeAppCenter;
     public RawImage imageBg;
     public Image imageBgName;
     public UIImage imageBg2;
     public UIImage imageBgName2;
     public UIText TextName;
+    public UIText textTitle;
     //public GameObject objLayoutTopBar;
     //public Button btnPlay;
     public UIImageText uiPlay;
@@ -36,6 +41,8 @@ public class UIHomeBase : UIView, IPopViewControllerDelegate
         Debug.Log("UIMainBase Init");
         //提前加载
         LevelManager.main.ParsePlaceList();
+         LoadAppCenter();
+
         if (uiHomeAppCenter != null)
         {
             uiHomeAppCenter.gameObject.SetActive(true);
@@ -135,7 +142,59 @@ public class UIHomeBase : UIView, IPopViewControllerDelegate
         }
 
     }
+    public void LoadCenterBar()
+    {
+        if (uiHomeCenterBar != null)
+        {
+            return;
+        }
+        string key = "UIHomeCenterBar";
+        GameObject obj = PrefabCache.main.LoadByKey(key);
+        if (obj != null)
+        {
+            UIHomeCenterBar uiPrefab = obj.GetComponent<UIHomeCenterBar>();
+            uiHomeCenterBar = (UIHomeCenterBar)GameObject.Instantiate(uiPrefab);
+            uiHomeCenterBar.SetParent(this);
+            UIViewController.ClonePrefabRectTransform(uiPrefab.gameObject, uiHomeCenterBar.gameObject);
+        }
 
+
+    }
+    public void LoadSideBar()
+    {
+        if (uiHomeSideBar != null)
+        {
+            return;
+        }
+        string key = "UIHomeSideBar";
+        GameObject obj = PrefabCache.main.LoadByKey(key);
+        if (obj != null)
+        {
+            UIHomeSideBar uiPrefab = obj.GetComponent<UIHomeSideBar>();
+            uiHomeSideBar = (UIHomeSideBar)GameObject.Instantiate(uiPrefab);
+            uiHomeSideBar.SetParent(this);
+            UIViewController.ClonePrefabRectTransform(uiPrefab.gameObject, uiHomeSideBar.gameObject);
+        }
+
+    }
+
+    public void LoadAppCenter()
+    {
+        if (uiHomeAppCenter != null)
+        {
+            return;
+        }
+        string key = "UIHomeAppCenter";
+        GameObject obj = PrefabCache.main.LoadByKey(key);
+        if (obj != null)
+        {
+            UIHomeAppCenter uiPrefab = obj.GetComponent<UIHomeAppCenter>();
+            uiHomeAppCenter = (UIHomeAppCenter)GameObject.Instantiate(uiPrefab);
+            uiHomeAppCenter.SetParent(this);
+            UIViewController.ClonePrefabRectTransform(uiPrefab.gameObject, uiHomeSideBar.gameObject);
+        }
+
+    }
 
 
     void OnAppExit()

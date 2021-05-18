@@ -5,10 +5,8 @@ using UnityEngine.UI;
 
 public class UIHomeMerge : UIHomeBase//, ISysImageLibDelegate
 {
-    public UIImage imageLogo;
-    public UIHomeSideBar uiHomeSideBar;
-
-    public UIHomeCenterBar uiHomeCenterBar;
+    public UIImage imageLogo; 
+ 
     void Awake()
     {
 

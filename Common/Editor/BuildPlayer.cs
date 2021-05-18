@@ -42,21 +42,21 @@ public class BuildPlayer
     [MenuItem(KEY_MENU_ROOT + "/Export Android")]
     static void PerformAndroidBuild()
     {
-        Debug.Log("PerformAndroidBuild start");
+        Debug.Log("PerformAndroidBuild android start");
         BulidTarget("UC", "Android");
-        Debug.Log("PerformAndroidBuild end");
+        Debug.Log("PerformAndroidBuild android end");
     }
 
     [MenuItem(KEY_MENU_ROOT + "/Export iPhone")]
     static void PerformiPhoneBuild()
     {
-        Debug.Log("PerformiPhoneBuild start");
+        Debug.Log("PerformiPhoneBuild ios start");
 #if UNITY_IOS
         Debug.Log("UNITY_IOS PerformiPhoneBuild start");
 #endif
 
         BulidTarget("QQ", "IOS");
-        Debug.Log("PerformiPhoneBuild end");
+        Debug.Log("PerformiPhoneBuild ios end");
     }
 
 
@@ -72,8 +72,11 @@ public class BuildPlayer
     [MenuItem(KEY_MENU_ROOT + "/Export Android & iOS")]
     static void PerformAndroidAndiOSBuild()
     {
+        Debug.Log("PerformAndroidAndiOSBuild start ");
         PerformAndroidBuild();
         PerformiPhoneBuild();
+
+        Debug.Log("PerformAndroidAndiOSBuild end ");
     }
     static void ConverIcon()
     {
@@ -125,6 +128,7 @@ public class BuildPlayer
         {
             //target_dir = applicationPath + "/OutPut/iOS";
             target_dir = Resource.dirProduct + "/bin";
+            FileUtil.DeleteDirContent(target_dir);
             // target_name = app_name;
             target_name = PlayerSettings.productName;
             targetGroup = BuildTargetGroup.Standalone;
@@ -185,6 +189,7 @@ public class BuildPlayer
         Debug.Log("BuildiOSPlayer copy gameres start ");
         string src = Resource.dirResourceDataGameRes;
         string dst = Resource.dirProjectXcode + "/Data/Raw/GameRes";
+        FileUtil.DeleteDir(dst);
         FileUtil.CopyDir(src, dst);
         Debug.Log("BuildiOSPlayer copy gameres end ");
     }

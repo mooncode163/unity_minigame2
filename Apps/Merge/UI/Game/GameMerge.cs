@@ -34,6 +34,7 @@ public class GameMerge : UIView
     public bool isAutoClick = false;
 
     public static GameMerge main;
+
     public void Awake()
     {
         main = this;
@@ -47,7 +48,10 @@ public class GameMerge : UIView
         uiProp.SetActive(false);
         isFirstRun = true;
         Clear();
-
+        
+        float oft = Device.isLandscape?160:320;
+        posYInit = Common.GetWorldSize(mainCam).y/2-Common.CanvasToWorldHeight(mainCam,AppSceneBase.main.sizeCanvas,oft);
+        
     }
     // Use this for initialization
     public void Start()
@@ -77,7 +81,7 @@ public class GameMerge : UIView
         float x, y, w, h;
     }
 
-   public void OnUITouchEvent(UITouchEvent ev, PointerEventData eventData, int status)
+    public void OnUITouchEvent(UITouchEvent ev, PointerEventData eventData, int status)
     {
         switch (status)
         {
@@ -222,8 +226,10 @@ public class GameMerge : UIView
         {
             uiItem.id = toId;
             uiItem.name = toId;
-            string pic = GameLevelParse.main.GetImagePath(toId);
-            uiItem.spriteItem.UpdateImage(pic);
+            // string pic = GameLevelParse.main.GetImagePath(toId);
+            ItemInfo info = new ItemInfo();
+            info.id = toId;
+            uiItem.UpdateItem(info);
         }
 
         OnRestPlay();
@@ -235,6 +241,7 @@ public class GameMerge : UIView
             UIMergeItem uilist = obj as UIMergeItem;
             if (uilist == ui)
             {
+                ShowMergeParticle(ui.transform.position, ui.id);
                 DestroyImmediate(ui.gameObject);
                 listItem.Remove(obj);
                 break;
@@ -265,6 +272,7 @@ public class GameMerge : UIView
             UIMergeItem ui = obj as UIMergeItem;
             if (ui.id == id)
             {
+                ShowMergeParticle(ui.transform.position, ui.id);
                 DestroyImmediate(ui.gameObject);
                 // listItem.Remove(obj);
             }
@@ -291,16 +299,36 @@ public class GameMerge : UIView
         // AppSceneBase.main.AddObjToMainWorld(ui.gameObject);
         ui.transform.SetParent(UIGameMerge.main.game.transform);
         ui.name = key;
-        string pic = GameLevelParse.main.GetImagePath(key);
-        ui.spriteItem.UpdateImage(pic);
+        ItemInfo info = new ItemInfo();
+        info.id = key;
+        ui.UpdateItem(info);
 
         ui.EnableGravity(false);
         float scale = (ScaleStart + 0.05f * GetIndexOfItem(key)) * 0.8f;
         ui.transform.localScale = new Vector3(scale, scale, 1f);
         ui.transform.localPosition = new Vector3(0, posYInit, -1f);
+        ui.transform.localRotation = Quaternion.Euler(new Vector3(0, 0, GameData.main.rotation));
+
         listItem.Add(ui);
         return ui;
     }
+
+    // 合成粒子特效
+    public void ShowMergeParticle(Vector3 positon, string id)
+    {
+        // BlueCandyMatchParticles.prefab
+        ParticleMerge uiPrefab = PrefabCache.main.LoadByKey<ParticleMerge>("ParticleMerge");
+        ParticleMerge ui = (ParticleMerge)GameObject.Instantiate(uiPrefab);
+        ui.SetParent(this);
+        ui.transform.position = positon;
+        ui.UpdateItem(id);
+        // listParticle.Add(ui.gameObject);
+
+
+    }
+
+
+
 
     void Update()
     {
@@ -380,22 +408,22 @@ public class GameMerge : UIView
                         }
                         // 生成物体 使用随机防止同地点击无限堆高
                         // uiItem.transform.position = pos + new Vector3(UnityEngine.Random.Range(-value, value) * ratio, UnityEngine.Random.Range(-value, value) * ratio, 0);//!
-                        uiItem.transform.position = pos + new Vector3(UnityEngine.Random.Range(-value, value) * ratio,  0, 0);//!
+                        uiItem.transform.position = pos + new Vector3(UnityEngine.Random.Range(-value, value) * ratio, 0, 0);//!
 
 
                     }
                 }
             }
 
-            if ((UITouchEvent.STATUS_TOUCH_MOVE == status)&&(!isAutoClick))
-           {
+            if ((UITouchEvent.STATUS_TOUCH_MOVE == status) && (!isAutoClick))
+            {
                 Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);//获取点击位置
                 if (uiItem != null)
                 {
                     if (uiItem.isNew)
                     {
                         Vector3 pos = new Vector3(mousePosition.x, posYInit, 0);//更改水果在场景中的位置
-                       uiItem.transform.position = pos;//! 
+                        uiItem.transform.position = pos;//! 
                     }
                 }
             }

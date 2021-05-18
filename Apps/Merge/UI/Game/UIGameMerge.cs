@@ -13,15 +13,15 @@ https://play.google.com/store/apps/details?id=com.hz.Android153.FruitSliceMaster
 */
 public class UIGameMerge : UIGameBase//, IGameMergeDelegate
 {
-        public enum Status
+    public enum Status
     {
         Play,
-        Prop, 
+        Prop,
     }
     GameMerge GameMergePrefab;
     public GameMerge game;
     public UIToolBar uiToolBar;
-        public UIText titleScore;
+    public UIText titleScore;
 
     public Status gameStatus;
     public UIPopProp.Type typeProp;
@@ -49,6 +49,15 @@ public class UIGameMerge : UIGameBase//, IGameMergeDelegate
         autoIndex = 0;
         gameStatus = Status.Play;
 
+        if (AppVersion.appCheckHasFinished)
+        {
+            UIGameAppCenter ui = ShowGameAppCenter();
+            LayOutRelation ly = ui.gameObject.AddComponent<LayOutRelation>();
+            ly.align = LayOutRelation.Align.UP_LEFT;
+            ly.offset = new Vector2(0, 460f);
+        }
+
+        LayOut();
 
     }
     // Use this for initialization
@@ -64,24 +73,24 @@ public class UIGameMerge : UIGameBase//, IGameMergeDelegate
         {
             if (LevelManager.main.gameLevel > 1)
             {
-                    isShowProp = true;
+                isShowProp = true;
                 //   OnGameFinish(false);
-                 Invoke("ShowProp",autoClickTime*autoClickCount/3);
+                Invoke("ShowProp", autoClickTime * autoClickCount / 3);
             }
         }
-        if(!isShowProp)
+        if (!isShowProp)
         {
 
             OnUIDidFinish(autoClickTime * autoClickCount * 1.2f);
 
         }
-// OnGameFinish(true);
+        // OnGameFinish(true);
     }
 
     public void ShowProp()
     {
-uiToolBar.OnClickBtnBomb();
-OnUIDidFinish();
+        uiToolBar.OnClickBtnBomb();
+        OnUIDidFinish();
     }
 
     IEnumerator MouseClickUp(float time, int idx)
@@ -107,7 +116,7 @@ OnUIDidFinish();
         {
             return;
         }
-        GameMerge.main.isAutoClick = true;  
+        GameMerge.main.isAutoClick = true;
         //for(int i=0;i<count;i++)
         {
             StartCoroutine(MouseClickDown(autoClickTime, autoIndex));
@@ -134,7 +143,6 @@ OnUIDidFinish();
     void LoadPrefab()
     {
 
-
         {
             GameObject obj = PrefabCache.main.LoadByKey("GameMerge");
             if (obj != null)
@@ -145,9 +153,6 @@ OnUIDidFinish();
         }
 
 
-
-
-
     }
 
 
@@ -155,7 +160,8 @@ OnUIDidFinish();
     public override void UpdateGuankaLevel(int level)
     {
         base.UpdateGuankaLevel(level);
-
+        GameLevelParse.main.CleanGuankaList();
+        GameLevelParse.main.ParseGuanka();
         GameMerge prefab = PrefabCache.main.LoadByKey<GameMerge>("GameMerge");
         game = (GameMerge)GameObject.Instantiate(prefab);
 
@@ -163,6 +169,10 @@ OnUIDidFinish();
         UIViewController.ClonePrefabRectTransform(prefab.gameObject, game.gameObject);
         GameData.main.score = 0;
         UpdateScore();
+        if (GameData.main.IsCustom() && (!GameData.main.HasCustomImage))
+        {
+            uiToolBar.ShowImageSelect(false);
+        }
     }
     public override void LayOut()
     {
@@ -233,16 +243,16 @@ OnUIDidFinish();
 
     }
 
-    public void OnGameProp(UIPopProp ui,UIPopProp.Type type)
+    public void OnGameProp(UIPopProp ui, UIPopProp.Type type)
     {
         typeProp = type;
-   
-         Debug.Log("OnGameProp typeProp="+typeProp);
+
+        Debug.Log("OnGameProp typeProp=" + typeProp);
         switch (type)
         {
             case UIPopProp.Type.Hammer:
                 {
-               
+
                 }
                 break;
             case UIPopProp.Type.Magic:
@@ -252,7 +262,7 @@ OnUIDidFinish();
                 break;
             case UIPopProp.Type.Bomb:
                 {
-                  
+
                 }
                 break;
         }

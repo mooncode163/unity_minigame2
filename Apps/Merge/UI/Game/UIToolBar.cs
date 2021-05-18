@@ -6,15 +6,43 @@ using UnityEngine;
 // 游戏道具
 public class UIToolBar : UIView
 {
-
+    public UIButton btnImageSelect;
     public void Awake()
     {
         base.Awake();
     }
+    public void Start()
+    {
+        base.Start();
 
+        if (!GameData.main.IsCustom())
+        {
+            btnImageSelect.SetActive(false);
+        }
+        LayOut();
+    }
+
+
+    public override void LayOut()
+    {
+        base.LayOut();
+
+        RectTransform rctran = this.GetComponent<RectTransform>();
+        float w = rctran.rect.width;
+        float h = rctran.rect.height;
+
+        UIButton btn = this.gameObject.GetComponentInChildren<UIButton>();
+        RectTransform rctranBtn = btn.GetComponent<RectTransform>();
+
+        int count = LayoutUtil.main.GetChildCount(this.gameObject, false);
+        h = count * (rctranBtn.rect.height + 24);
+        rctran.sizeDelta = new Vector2(w, h);
+
+        base.LayOut();
+    }
     public void ShowPop(UIPopProp.Type type)
     {
-        if(!GameMerge.main.IsHasFalledBall())
+        if (!GameMerge.main.IsHasFalledBall())
         {
             return;
         }
@@ -22,8 +50,25 @@ public class UIToolBar : UIView
         string strPrefab = ConfigPrefab.main.GetPrefab("UIPopProp");
         PopUpManager.main.Show<UIPopProp>(strPrefab, popup =>
                 {
-                popup.UpdateType(type);
-                 AdKitCommon.main.ShowAdVideo();
+                    popup.UpdateType(type);
+                    AdKitCommon.main.ShowAdVideo();
+                }, popup =>
+                {
+
+
+                });
+    }
+
+    public void ShowImageSelect(bool isAd)
+    {
+        UIGameMerge.main.gameStatus = UIGameMerge.Status.Prop;
+        string strPrefab = ConfigPrefab.main.GetPrefab("UIOptionImageSelect");
+        PopUpManager.main.Show<UIOptionImageSelect>(strPrefab, popup =>
+                {
+                    if (isAd)
+                    {
+                        // AdKitCommon.main.ShowAdVideo();
+                    }
                 }, popup =>
                 {
 
@@ -50,5 +95,22 @@ public class UIToolBar : UIView
     {
         ShowPop(UIPopProp.Type.Bomb);
     }
+    public void OnClickBtnOptionImageSelect()
+    {
+        ShowImageSelect(true);
+    }
 
+    public void OnClickBtnOptiongGame()
+    {
+        UIGameMerge.main.gameStatus = UIGameMerge.Status.Prop;
+        string strPrefab = ConfigPrefab.main.GetPrefab("UIOptionGame");
+        PopUpManager.main.Show<UIOptionGame>(strPrefab, popup =>
+                {
+                    // AdKitCommon.main.ShowAdVideo();
+                }, popup =>
+                {
+
+
+                });
+    }
 }

@@ -20,7 +20,7 @@ public class UIScreenShotController : UIView
     float screenDisplayWordHeight;
 
     List<ShotDeviceInfo> listDevice;
-    ShotDeviceInfo deviceInfoNow;
+    public ShotDeviceInfo deviceInfoNow;
     public int indexScreenShot;
     public int totalScreenShot;
     int indexDevice;
@@ -52,11 +52,27 @@ public class UIScreenShotController : UIView
             return ret;
         }
     }
+
+
+     static private UIScreenShotController _main = null;
+    public static UIScreenShotController main
+    {
+        get
+        {
+            if (_main == null)
+            {
+
+            }
+            return _main;
+        }
+
+    }
     /// <summary>
     /// Awake is called when the script instance is being loaded.
     /// </summary>
     void Awake()
     {
+        _main = this;
         Debug.Log("UIScreenShotController Awake");
         GameManager.main.isLoadGameScreenShot = true;
         screenShotConfig = new ScreenShotConfig();
@@ -153,7 +169,7 @@ public class UIScreenShotController : UIView
         }
         int w_new = w;
         int h_new = h;
-       if (Common.isWin)
+        if (Common.isWin)
         {
             //windows 超出屏幕不显示,需要適配屏幕大小
             float scalex = ScreenDeviceInfo.WIDTH_SCREEN_PC * 1.0f / w;
@@ -255,6 +271,7 @@ public class UIScreenShotController : UIView
     {
         string ret = "";
         string rootDir = GetRootDirOutPut();
+
         if (info.width > info.height)
         {
             ret = rootDir + "/screenshot/heng";
@@ -269,8 +286,9 @@ public class UIScreenShotController : UIView
 
         if (deviceInfoNow.name == ScreenDeviceInfo.DEVICE_NAME_AD)
         {
-            ret = rootDir + "/" + info.name;
-            ret += "/" + strlan;
+            string keyHD = info.isHD ? "heng" : "shu";
+            ret = rootDir + "/" + info.name + "/" + keyHD + "/" + strlan;
+
         }
         else if (deviceInfoNow.name == ScreenDeviceInfo.DEVICE_NAME_ICON)
         {

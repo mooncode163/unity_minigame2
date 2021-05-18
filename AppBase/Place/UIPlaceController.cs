@@ -257,9 +257,14 @@ public class UIPlaceController : UIPlaceBase, ITableViewDataSource
             }
             else
             {
-                GuankaViewController guanka = GuankaViewController.main;
-                guanka.indexPlace = idx;
-                navi.Push(guanka);
+                UIViewController toCon = this.controller.toController;
+                if(toCon==null)
+                {
+                    GuankaViewController.main.indexPlace = idx;
+                    toCon = GuankaViewController.main;
+                }
+                toCon.fromController = this.controller;
+                navi.Push(toCon);
             }
         }
     }

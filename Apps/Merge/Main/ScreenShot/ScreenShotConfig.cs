@@ -7,7 +7,7 @@ public class ScreenShotConfig
     public ShotDeviceInfo deviceInfo;
     public int GetTotalPage()
     {
-        return 4;
+        return 5;
     }
     public ShotItemInfo GetPage(ShotDeviceInfo dev, int idx)
     {
@@ -37,22 +37,27 @@ public class ScreenShotConfig
 
                 case 0:
                     LevelManager.main.gameLevel = 0;
-
+                    // LevelManager.main.gameLevel = 2;
                     UIGameMerge.autoClickCount = 100;
                     controller = GameViewController.main;
                     break;
                 case 1:
                     LevelManager.main.gameLevel = 0;
-                    UIGameMerge.autoClickCount = 150;
+                    UIGameMerge.autoClickCount = 120;
                     controller = GameViewController.main;
                     break;
                 case 2:
-                    LevelManager.main.gameLevel = 2;
-                    UIGameMerge.autoClickCount = 200;
-                    //  gamewin 
+                    LevelManager.main.gameLevel = 0;
+                    UIGameMerge.autoClickCount = 150;
                     controller = GameViewController.main;
                     break;
                 case 3:
+                    LevelManager.main.gameLevel = 2;
+                    UIGameMerge.autoClickCount = 100;
+                    //  gamewin 
+                    controller = GameViewController.main;
+                    break;
+                case 4:
                     controller = HomeViewController.main;
                     break;
                 default:

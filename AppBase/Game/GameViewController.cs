@@ -173,6 +173,10 @@ public class GameViewController : PopViewController
         {
             ret = false;
         }
+        if (Common.noad)
+        {
+            return false;
+        }
         return ret;
     }
 

@@ -70,6 +70,25 @@ public class UIGameBase : UIView
     }
 
 
+    /*
+
+         if (AppVersion.appCheckHasFinished)
+            {
+                UIGameAppCenter ui = ShowGameAppCenter();
+                LayOutRelation ly = ui.gameObject.AddComponent<LayOutRelation>();
+                ly.align = LayOutRelation.Align.UP_LEFT;
+                ly.offset = new Vector2(0, 300f);
+            }
+    */
+    public UIGameAppCenter ShowGameAppCenter()
+    {
+        // BlueCandyMatchParticles.prefab
+        UIGameAppCenter uiPrefab = PrefabCache.main.LoadByKey<UIGameAppCenter>("UIGameAppCenter");
+        UIGameAppCenter ui = (UIGameAppCenter)GameObject.Instantiate(uiPrefab);
+        ui.transform.SetParent(this.transform);
+        // ui.transform.position = positon;
+        return ui;
+    }
     public void ShowParentGate(OnUIParentGateDidCloseDelegate callbackClose)
     {
         ParentGateViewController.main.Show(null, null);
@@ -91,8 +110,8 @@ public class UIGameBase : UIView
         }
         else
         {
-            if ((LevelManager.main.gameLevel != 0) && ((LevelManager.main.gameLevel % _step) == 0))
-            //if ((LevelManager.main.gameLevel % _step) == 0)
+            // if ((LevelManager.main.gameLevel != 0) && ((LevelManager.main.gameLevel % _step) == 0))
+            if ((LevelManager.main.gameLevel % _step) == 0)
             {
                 isshow = true;
             }
@@ -147,16 +166,17 @@ public class UIGameBase : UIView
         //     objSpriteBg.transform.localScale = new Vector3(scale, scale, 1.0f);
 
         // }
-        AppSceneBase.main.LayoutChild();
+        AppSceneBase.main.LayOut();
     }
 
     public void UpdateLanguage()
     {
         ItemInfo info = LevelManager.main.GetPlaceItemInfo(LevelManager.main.placeLevel);
-        if(info==null){
+        if (info == null)
+        {
             return;
         }
-        string strlan = CloudRes.main.rootPathGameRes +"/language/" + info.language + ".csv";
+        string strlan = CloudRes.main.rootPathGameRes + "/language/" + info.language + ".csv";
         languageGame = new Language();
         languageGame.Init(strlan);
         languageGame.SetLanguage(Language.main.GetLanguage());
@@ -164,7 +184,7 @@ public class UIGameBase : UIView
 
     }
     public void UpdateBtnMusic()
-    { 
+    {
         UIHomeBase.UpdateBtnMusic(btnMusic);
     }
 

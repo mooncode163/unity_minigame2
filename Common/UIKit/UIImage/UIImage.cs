@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class UIImage : UIView
 {
     public Image image;
-
+    public bool isCache = true;
 
 
 
@@ -61,6 +61,12 @@ public class UIImage : UIView
         }
     }
 
+    public void UpdateImageTexture(Texture2D tex)
+    {
+        TextureUtil.UpdateImageTexture(image, tex, true);
+        RectTransform rctan = this.GetComponent<RectTransform>();
+        rctan.sizeDelta = new Vector2(tex.width, tex.height);
+    }
     // 绝对路径
     public void UpdateImage(string pic, string key = "")
     {
@@ -87,7 +93,7 @@ public class UIImage : UIView
         Vector2 offsetMin = rctranOrigin.offsetMin;
         Vector2 offsetMax = rctranOrigin.offsetMax;
 
-        Texture2D tex = TextureCache.main.Load(pic);
+        Texture2D tex = TextureCache.main.Load(pic,isCache);
         TextureUtil.UpdateImageTexture(image, tex, true, board);
         RectTransform rctan = this.GetComponent<RectTransform>();
         rctan.sizeDelta = new Vector2(tex.width, tex.height);

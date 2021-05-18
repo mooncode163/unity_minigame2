@@ -44,7 +44,7 @@ public class UIHomeCenterBar : UIView
         }
 
 
-// btnAddLove.gameObject.SetActive(AppVersion.appCheckHasFinished);
+        // btnAddLove.gameObject.SetActive(AppVersion.appCheckHasFinished);
 
 
     }
@@ -63,7 +63,7 @@ public class UIHomeCenterBar : UIView
 
         Vector2 sizeCanvas = this.frame.size;
         float x = 0, y = 0, w = 0, h = 0;
- 
+
 
     }
 
@@ -74,11 +74,20 @@ public class UIHomeCenterBar : UIView
     public void OnClickBtnPlay()
     {
         //AudioPlay.main.PlayAudioClip(audioClipBtn); 
-
+        int total = LevelManager.main.placeTotal;
         if (this.controller != null)
         {
             NaviViewController navi = this.controller.naviController;
-            navi.Push(GameViewController.main);
+            // 
+            if (total > 1)
+            {
+                PlaceViewController.main.toController =GameViewController.main;
+                navi.Push(PlaceViewController.main);
+            }
+            else
+            {
+                navi.Push(GameViewController.main);
+            }
         }
     }
 

@@ -44,7 +44,7 @@ public bool enableLongPress;
             return;
         }
 
-        tickPress = Common.GetCurrentTimeMs() - tickPress;
+        // tickPress = Common.GetCurrentTimeMs() - tickPress;
         if (isTouchDown&&enableLongPress)
         {
 

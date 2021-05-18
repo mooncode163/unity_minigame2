@@ -162,13 +162,14 @@ public class UIPopProp : UIViewPop
     }
 
     public void OnClose()
-    {
+    { 
         Close();
         // UIGameMerge.main.game.ShowProp(false);
 
     }
     public void OnClickBtnClose()
     {
+        UIGameMerge.main.gameStatus = UIGameMerge.Status.Play;
         OnClose();
     }
     public void OnClickBtnYes()
@@ -177,10 +178,9 @@ public class UIPopProp : UIViewPop
         UIGameMerge.main.game.ShowProp(true);
         UIGameMerge.main.OnGameProp(this, type);
 
-    }
-    public void OnClickBtnNo()
+    } 
+     public void OnClickBtnNo()
     {
-        OnClose();
-
+        OnClickBtnClose();
     }
 }

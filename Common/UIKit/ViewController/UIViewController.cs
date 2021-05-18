@@ -22,7 +22,8 @@ public class UIViewController
     public Type type = Type.NONE;
 
     public NaviViewController naviController;
-
+    public UIViewController fromController;
+    public UIViewController toController;
     ScriptController scriptController;
 
     public OnUIViewDidFinishDelegate callbackUIFinish { get; set; }

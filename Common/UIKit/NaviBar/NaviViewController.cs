@@ -134,7 +134,7 @@ public class NaviViewController : UIViewController
         }
         listController.Add(controller);
         controller.type = UIViewController.Type.NAVIBAR;
-        controller.naviController = this;
+        controller.naviController = this; 
         UpdateController();
 
     }

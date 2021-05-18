@@ -242,7 +242,8 @@ public class UISettingControllerBase : UIView, ITableViewDataSource
             info.tag = (int)SettingItemTag.TAG_SETTING_NOAD;
             listItem.Add(info);
         }
-        if (Common.isiOS && Config.main.isHaveRemoveAd)
+        // if (Common.isiOS && Config.main.isHaveRemoveAd)
+         if (Common.isiOS)
         {
             ItemInfo info = new ItemInfo();
             info.title = Language.main.GetString("STR_BTN_RESTORE_NOAD");

@@ -13,6 +13,7 @@ public class ShotDeviceInfo
     public SystemLanguage lan;
     public bool isMain;
     public int index;
+    public bool isHD;
 }
 
 public class ScreenDeviceInfo
@@ -53,7 +54,7 @@ public class ScreenDeviceInfo
     public const string DEVICE_NAME_WEIBO = "weibo";
 
     //ad
-    public const string DEVICE_NAME_AD = "ad"; 
+    public const string DEVICE_NAME_AD = "ad";
     //icon
     public const string DEVICE_NAME_ICON = "icon";
     public const int SCREEN_WIDTH_ICON = 1024;
@@ -74,7 +75,7 @@ public class ScreenDeviceInfo
     public List<ShotDeviceInfo> listDevice;
 
     List<SystemLanguage> listLanguage;
-    ShotDeviceInfo deviceInfoNow;
+    // public ShotDeviceInfo deviceInfoNow;
     static private ScreenDeviceInfo _main = null;
     public static ScreenDeviceInfo main
     {
@@ -140,18 +141,20 @@ public class ScreenDeviceInfo
             // //ICON
             CreateDevice(DEVICE_NAME_ICON, SCREEN_WIDTH_ICON, SCREEN_HEIGHT_ICON, false, true);
             //adhome
-            CreateDevice(DEVICE_NAME_AD, 1024, 500, false, true);
+            CreateDevice(DEVICE_NAME_AD, 1024, 500, true, true);
 
-            CreateDevice(DEVICE_NAME_AD, 1080, 480, false, true);
+            CreateDevice(DEVICE_NAME_AD, 1080, 480, true, true);
 
-            CreateDevice(DEVICE_NAME_AD, 1920, 1080, false, true);
+            CreateDevice(DEVICE_NAME_AD, 1920, 1080, true, true);
 
         }
 
 
-        deviceInfoNow = listDevice[0];
+        // deviceInfoNow = listDevice[0];
 
     }
+
+    // isBoth shu heng
     public void CreateDevice(string name, int w, int h, bool isBoth, bool isMain)
     {
         if (name == DEVICE_NAME_ICON)
@@ -190,7 +193,16 @@ public class ScreenDeviceInfo
             foreach (SystemLanguage lan in listLanguage)
             {
                 //竖屏
-                ShotDeviceInfo info = CreateDeviceItem(name, Mathf.Min(w, h), Mathf.Max(w, h), lan, isMain, false);
+
+                if (DEVICE_NAME_AD == name)
+                {
+                    ShotDeviceInfo info = CreateDeviceItem(name, Mathf.Max(w, h), Mathf.Min(w, h), lan, isMain, false);
+                    info.isHD = false;
+                }
+                else
+                {
+                    ShotDeviceInfo info = CreateDeviceItem(name, Mathf.Min(w, h), Mathf.Max(w, h), lan, isMain, false);
+                }
 
             }
 
@@ -198,6 +210,10 @@ public class ScreenDeviceInfo
             {
                 //横屏
                 ShotDeviceInfo info = CreateDeviceItem(name, Mathf.Max(w, h), Mathf.Min(w, h), lan, isMain, false);
+                if (DEVICE_NAME_AD == name)
+                {
+                    info.isHD = true;
+                }
             }
         }
         else
@@ -223,6 +239,11 @@ public class ScreenDeviceInfo
         info.isIconHd = isHd;
         info.isMain = isMain;
         info.index = listDevice.Count;
+        info.isHD = false;
+        if (name == ScreenDeviceInfo.DEVICE_NAME_AD)
+        {
+
+        }
         listDevice.Add(info);
         return info;
     }

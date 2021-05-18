@@ -13,7 +13,8 @@ public class UIAdHomeController : UIShotBase
     /// </summary>
     void Awake()
     {
-        string appname = Common.GetAppNameDisplay();
+        // string appname = Common.GetAppNameDisplay();
+        string appname = Language.main.GetString(AppVersion.appForPad ? AppString.APP_NAME_HD : AppString.APP_NAME);
         textTitle.text = appname; 
         string pic = Common.GAME_DATA_DIR + "/screenshot/adhome.png";
         imageBg.UpdateImage(pic); 

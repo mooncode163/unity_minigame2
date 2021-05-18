@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class UISprite : UIView
 {
     public GameObject objSp;
-
+public bool isCache = true;
     /// Awake is called when the script instance is being loaded.
     /// </summary>
     public void Awake()
@@ -68,7 +68,8 @@ public class UISprite : UIView
         Vector2 offsetMin = rctranOrigin.offsetMin;
         Vector2 offsetMax = rctranOrigin.offsetMax;
 
-        Texture2D tex = TextureCache.main.Load(pic);
+ 
+        Texture2D tex = TextureCache.main.Load(pic,isCache);
         SpriteRenderer rd = objSp.GetComponent<SpriteRenderer>();
         //sprite
         if ((rd != null) && (tex != null))
